@@ -43,6 +43,8 @@ export default function Todo({ todo }) {
     });
 
     setTodos(updateTodos);
+    localStorage.setItem("todos", JSON.stringify(updateTodos));
+    setOpenDeleteDialog(false);
   };
 
   const handleUpdateConfirm = () => {
@@ -55,6 +57,7 @@ export default function Todo({ todo }) {
       }
     });
     setTodos(updateTodos);
+    localStorage.setItem("todos", JSON.stringify(updateTodos));
     setOpenEditDialog(false)
   };
 
@@ -203,6 +206,7 @@ export default function Todo({ todo }) {
                     return t;
                   });
                   setTodos(updateTodos);
+                  localStorage.setItem("todos", JSON.stringify(updateTodos));
                 }}
               >
                 <CheckIcon />

@@ -5,24 +5,6 @@ import { v4 as uuidv4 } from "uuid";
 import { useState } from "react";
 
 const initialTodos = [
-  {
-    id: uuidv4(),
-    title: "قراءة كتاب",
-    details: "sadadasdasdsa",
-    isCompleted: false,
-  },
-  {
-    id: uuidv4(),
-    title: "قراءة كتاب",
-    details: "sadadasdasdsa",
-    isCompleted: false,
-  },
-  {
-    id: uuidv4(),
-    title: "قراءة كتاب",
-    details: "sadadasdasdsa",
-    isCompleted: false,
-  },
 ];
 
 function App() {

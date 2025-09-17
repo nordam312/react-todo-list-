@@ -17,7 +17,7 @@ import { v4 as uuidv4 } from "uuid";
 
 //others
 import { TodosContext } from "../contexts/todosContext";
-import { useState } from "react";
+import { useState , useEffect} from "react";
 import { useContext } from "react";
 
 // Create a custom theme with your desired primary color
@@ -36,14 +36,12 @@ const theme = createTheme({
   },
 });
 
+
 export default function TodoList() {
   const {todos , setTodos} = useContext(TodosContext)
   const [alignment, setAlignment] = useState("web");
   const [titleInput, setTitleInput] = useState("");
 
-  const handleCheckClick = (todoId) => {
-
-  };
   const handleChange = (event, newAlignment) => {
     setAlignment(newAlignment);
   };
@@ -59,10 +57,18 @@ export default function TodoList() {
       details: "",
       isCompleted: false,
     };
-    setTodos([...todos, newTodo]);
+    const updateTodos = [...todos, newTodo];
+    setTodos(updateTodos);
+    localStorage.setItem("todos", JSON.stringify(updateTodos));
     setTitleInput("");
   };
-
+useEffect(() => {
+  const storedTodos = localStorage.getItem("todos");
+  if (storedTodos) {
+    const getTodos = JSON.parse(storedTodos);
+    setTodos(getTodos);
+  }
+}, []);
   return (
     <ThemeProvider theme={theme}>
       <Container maxWidth="sm">
