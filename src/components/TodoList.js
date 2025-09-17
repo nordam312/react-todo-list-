@@ -7,13 +7,18 @@ import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
-import { useState } from "react";
-import Todo from "./Todo";
-import "../App.css";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import "../App.css";
+import Todo from "./Todo";
+import { v4 as uuidv4 } from "uuid";
 
+
+//others
+import { TodosContext } from "../contexts/todosContext";
+import { useState } from "react";
+import { useContext } from "react";
 
 // Create a custom theme with your desired primary color
 const theme = createTheme({
@@ -32,10 +37,30 @@ const theme = createTheme({
 });
 
 export default function TodoList() {
+  const {todos , setTodos} = useContext(TodosContext)
   const [alignment, setAlignment] = useState("web");
+  const [titleInput, setTitleInput] = useState("");
 
+  const handleCheckClick = (todoId) => {
+
+  };
   const handleChange = (event, newAlignment) => {
     setAlignment(newAlignment);
+  };
+
+  const todosJsx = todos.map((t) => {
+    return <Todo key={t.id} todo={t}/>;
+  });
+
+  const handleAddClick = () => {
+    const newTodo = {
+      id: uuidv4(),
+      title: titleInput,
+      details: "",
+      isCompleted: false,
+    };
+    setTodos([...todos, newTodo]);
+    setTitleInput("");
   };
 
   return (
@@ -64,7 +89,7 @@ export default function TodoList() {
             </ToggleButtonGroup>
 
             {/* ALL TODOES */}
-            <Todo />
+            {todosJsx}
             {/* END ALL TODOES */}
 
             {/* INPUT + ADD BUTTON */}
@@ -76,6 +101,10 @@ export default function TodoList() {
                   label="عنوان مهمة"
                   variant="outlined"
                   style={{ width: "100%" }}
+                  value={titleInput}
+                  onChange={(e) => {
+                    setTitleInput(e.target.value);
+                  }}
                 />
               </Grid>
               <Grid
@@ -85,7 +114,15 @@ export default function TodoList() {
                 alignItems="center"
               >
                 {" "}
-                <Button variant="contained" style={{width:"100%"}}>اضافة</Button>
+                <Button
+                  variant="contained"
+                  style={{ width: "100%" }}
+                  onClick={() => {
+                    handleAddClick();
+                  }}
+                >
+                  اضافة
+                </Button>
               </Grid>
               {/* Action Buttons END*/}
             </Grid>

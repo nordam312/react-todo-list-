@@ -58,25 +58,25 @@
 /* Custom Fonts  */
 @font-face {
   font-family: "Alexandria";
-  src: url("./fonts/Alexandria-Regular.ttf");
+  src: url("/public/fonts/Alexandria-Regular.ttf");
   font-weight: normal;
 }
 
 @font-face {
   font-family: "Alexandria";
-  src: url("./fonts/Alexandria-Bold.ttf");
+  src: url("/public/fonts/Alexandria-Bold.ttf");
   font-weight: bold;
 }
 
 @font-face {
   font-family: "Alexandria";
-  src: url("./fonts/Alexandria-Light.ttf");
+  src: url("/public/fonts/Alexandria-Light.ttf");
   font-weight: 200;
 }
 
 @font-face {
   font-family: "Alexandria";
-  src: url("./fonts/Alexandria-Black.ttf");
+  src: url("/public/fonts/Alexandria-Black.ttf");
   font-weight: 900;
 }
 /* Custom Fonts End  */
