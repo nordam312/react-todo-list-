@@ -14,10 +14,9 @@ import "../App.css";
 import Todo from "./Todo";
 import { v4 as uuidv4 } from "uuid";
 
-
 //others
 import { TodosContext } from "../contexts/todosContext";
-import { useState , useEffect} from "react";
+import { useState, useEffect } from "react";
 import { useContext } from "react";
 
 // Create a custom theme with your desired primary color
@@ -36,18 +35,33 @@ const theme = createTheme({
   },
 });
 
-
 export default function TodoList() {
-  const {todos , setTodos} = useContext(TodosContext)
-  const [alignment, setAlignment] = useState("web");
+  const { todos, setTodos } = useContext(TodosContext);
+  const [alignment, setAlignment] = useState("all");
   const [titleInput, setTitleInput] = useState("");
 
   const handleChange = (event, newAlignment) => {
     setAlignment(newAlignment);
   };
 
-  const todosJsx = todos.map((t) => {
-    return <Todo key={t.id} todo={t}/>;
+  const completedTodos = todos.filter((t) => {
+    return t.isCompleted;
+  });
+  const notCompletedTodos = todos.filter((t) => {
+    return !t.isCompleted;
+  });
+  let todosToRender = todos;
+
+  if (alignment === "completed") {
+    todosToRender = completedTodos;
+  } else if (alignment === "non-completed") {
+    todosToRender = notCompletedTodos;
+  } else {
+    todosToRender = todos;
+  }
+
+  const todosJsx = todosToRender.map((t) => {
+    return <Todo key={t.id} todo={t} />;
   });
 
   const handleAddClick = () => {
@@ -62,17 +76,22 @@ export default function TodoList() {
     localStorage.setItem("todos", JSON.stringify(updateTodos));
     setTitleInput("");
   };
-useEffect(() => {
-  const storedTodos = localStorage.getItem("todos");
-  if (storedTodos) {
-    const getTodos = JSON.parse(storedTodos);
-    setTodos(getTodos);
-  }
-}, []);
+  useEffect(() => {
+    const storedTodos = localStorage.getItem("todos");
+    if (storedTodos) {
+      const getTodos = JSON.parse(storedTodos);
+      setTodos(getTodos);
+    }
+  }, []);
   return (
     <ThemeProvider theme={theme}>
       <Container maxWidth="sm">
-        <Card>
+        <Card className="scrollable-card" style={{
+          maxHeight:"80vh",
+          overflowY:"auto",
+          overflowX:"hidden",
+          position: "relative"
+        }}>
           <CardContent>
             <Typography
               variant="h2"
@@ -89,9 +108,9 @@ useEffect(() => {
               aria-label="Platform"
               style={{ direction: "ltr", marginTop: "20px" }}
             >
-              <ToggleButton value="ios">غير منجز</ToggleButton>
-              <ToggleButton value="android">المنجز</ToggleButton>
-              <ToggleButton value="web">الكل</ToggleButton>
+              <ToggleButton value="non-completed">غير منجز</ToggleButton>
+              <ToggleButton value="completed">المنجز</ToggleButton>
+              <ToggleButton value="all">الكل</ToggleButton>
             </ToggleButtonGroup>
 
             {/* ALL TODOES */}
@@ -126,6 +145,7 @@ useEffect(() => {
                   onClick={() => {
                     handleAddClick();
                   }}
+                  disabled={titleInput.length <=0}
                 >
                   اضافة
                 </Button>

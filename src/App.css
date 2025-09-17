@@ -80,3 +80,43 @@
   font-weight: 900;
 }
 /* Custom Fonts End  */
+
+/* Custom scrollbar styling - auto-hide */
+.scrollable-card {
+  scrollbar-width: thin; /* Firefox - thin scrollbar */
+  scrollbar-color: rgba(144, 202, 144, 0) transparent; /* Firefox - initially transparent */
+  transition: scrollbar-color 0.3s;
+}
+
+.scrollable-card:hover {
+  scrollbar-color: #90ca90 #f0f0f0; /* Firefox - show on hover */
+}
+
+.scrollable-card::-webkit-scrollbar {
+  width: 8px; /* Chrome, Safari, Opera - thin scrollbar */
+}
+
+.scrollable-card::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 4px;
+  transition: background 0.3s;
+}
+
+.scrollable-card:hover::-webkit-scrollbar-track {
+  background: #f0f0f0;
+}
+
+.scrollable-card::-webkit-scrollbar-thumb {
+  background: rgba(144, 202, 144, 0);
+  border-radius: 4px;
+  min-height: 30px;
+  transition: background 0.3s;
+}
+
+.scrollable-card:hover::-webkit-scrollbar-thumb {
+  background: #90ca90;
+}
+
+.scrollable-card::-webkit-scrollbar-thumb:hover {
+  background: #60ac60 !important;
+}
